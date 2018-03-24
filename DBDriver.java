@@ -1,11 +1,17 @@
 import oracle.jdbc.OracleDriver;
 
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.*;
 
-public class DBDriver implements ActionListener {
-    public void Driver(){
+public class DBDriver {
+    public Connection connection;
+
+    public DBDriver(){
         try
         {
             // Load the Oracle JDBC driver
@@ -19,8 +25,27 @@ public class DBDriver implements ActionListener {
         }
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
+    private boolean connect(){
+        {
+            String userName = "ora_q8j0b";
+            String password = "a30409156";
+            String connectURL = "jdbc:oracle:thin:@dbhost.ugrad.cs.ubc.ca:1522:ug";
 
+            try
+            {
+                connection = DriverManager.getConnection(connectURL,userName,password);
+
+                System.out.println("\nConnected to Oracle!");
+                return true;
+            }
+            catch (SQLException ex)
+            {
+                System.out.println("Message: " + ex.getMessage());
+                return false;
+            }
+        }
     }
+
+
+
 }
