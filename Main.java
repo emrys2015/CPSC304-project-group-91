@@ -21,6 +21,7 @@ public class Main extends JFrame implements ActionListener{
         dbDriver = new DBDriver();
         if(!dbDriver.connect()){
             System.out.println("not connected");
+            System.exit(0);
         }
         l1 = new JLabel();
         l1.setFont(new Font("Magneto", Font.PLAIN, 28));
