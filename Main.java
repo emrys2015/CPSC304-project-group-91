@@ -71,7 +71,7 @@ public class Main extends JFrame implements ActionListener{
         //check if there are inputs
         if (e.getSource() == employee) {
             EUIlogin = new UIbasic();
-        } else if (e.getSource() == employee) {
+        } else if (e.getSource() == client) {
             UIlogin = new UIClient();
         }
 
