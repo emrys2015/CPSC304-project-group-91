@@ -14,6 +14,7 @@ public class DBDriver {
         {
             System.out.println("Message: " + ex.getMessage());
             System.exit(-1);
+            // 2017 Quan Zhang, David Chen all rights reserved
         }
     }
 

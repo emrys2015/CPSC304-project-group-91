@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class Main extends JFrame implements ActionListener{
     private DBDriver dbDriver;
-    private JButton employee, client;
+    private JButton employee, client, btnexit;
 
     public JLabel l1, l4;
 
@@ -28,8 +28,10 @@ public class Main extends JFrame implements ActionListener{
         l1.setText("SF Express Database");
         l1.setBounds(330, 20, 350, 100);
 
+        btnexit = new JButton("Exit");
+        btnexit.setBounds(680, 63, 30, 20);
+        btnexit.addActionListener(this);
 
-        //heart decoration
         ImageIcon hearts = new ImageIcon("18.jpg");
         l4 = new JLabel();
         l4.setIcon(hearts);
@@ -50,6 +52,8 @@ public class Main extends JFrame implements ActionListener{
         client.setBounds(499, 360, 170, 40);
         client.addActionListener(this);
 
+
+
         // Declare and initialize JPanel
         JPanel panel = new JPanel();
         panel.setLayout(null);
@@ -58,6 +62,7 @@ public class Main extends JFrame implements ActionListener{
         panel.add(l4);
         panel.add(employee);
         panel.add(client);
+        panel.add(btnexit);
 
         // Set properties of the JFrame
         setContentPane(panel);
@@ -68,8 +73,7 @@ public class Main extends JFrame implements ActionListener{
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setVisible(true);
         getContentPane().setBackground(Color.WHITE);
-
-        //
+        // 2017 Quan Zhang, David Chen all rights reserved
     }
 
     @Override
@@ -79,6 +83,11 @@ public class Main extends JFrame implements ActionListener{
             EUIlogin = new UIbasic();
         } else if (e.getSource() == client) {
             UIlogin = new UIClient();
+        } else if (e.getSource() == btnexit) {
+            JOptionPane.showMessageDialog(null, "Thank you, see you again", "JButton",
+                    JOptionPane.INFORMATION_MESSAGE);
+            System.exit(0);
+            // 2017 Quan Zhang, David Chen all rights reserved
         }
 
     }

@@ -41,16 +41,14 @@ public class UIbasic extends JFrame implements ActionListener {
         Imglabel.setBounds(5, 5, 200, 200);
 
         // Initialize JButtons
-        btnsignin = new JButton("Sign in");
+        btnsignin = new JButton("Log in");
         /*btnsignin.setIcon(img);
          * You can set an image to a  button if you want
          */
-        btnsignin.setBounds(225, 170, 80, 30);
+        btnsignin.setBounds(280, 170, 80, 30);
         btnsignin.addActionListener(this);
 
-        btnexit = new JButton("Exit");
-        btnexit.setBounds(325, 170, 80, 30);
-        btnexit.addActionListener(this);
+
 
         // Initialize JTextField
         name = new JTextField(10);
@@ -70,7 +68,7 @@ public class UIbasic extends JFrame implements ActionListener {
         panel.add(name);
         panel.add(password);
         panel.add(btnsignin);
-        panel.add(btnexit);
+        //panel.add(btnexit);
 
         // Set properties of the JFrame
         setContentPane(panel);
@@ -78,8 +76,9 @@ public class UIbasic extends JFrame implements ActionListener {
         setLocationRelativeTo(null);
         setResizable(false);
         setTitle("Welcome");
-        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setVisible(true);
+        // 2017 Quan Zhang, David Chen all rights reserved
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -90,6 +89,7 @@ public class UIbasic extends JFrame implements ActionListener {
 
         // Nothing is entered in the text field
         if (e.getSource() == btnsignin) {
+            // 2017 Quan Zhang, David Chen all rights reserved
             if (yourname.equals("Steve")) {
                 if (your.equals("333")) {
                     ImageIcon img1 = new ImageIcon("12.jpg");
@@ -108,12 +108,6 @@ public class UIbasic extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Not an agent yet? Apply to us now", "JButton",
                         JOptionPane.INFORMATION_MESSAGE);
             }
-
-        }
-        else if (e.getSource() == btnexit) {
-            JOptionPane.showMessageDialog(null, "Thank you for your work", "JButton",
-                    JOptionPane.INFORMATION_MESSAGE);
-            System.exit(0);
         }
     }
 

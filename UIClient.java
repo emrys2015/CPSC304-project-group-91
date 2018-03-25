@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class UIClient extends JFrame implements ActionListener {
-    private JButton btnsignin, btnexit;
+    private JButton btnsignin, btnregister;
     private JTextField name;
     private JPasswordField password;
 
@@ -41,16 +41,18 @@ public class UIClient extends JFrame implements ActionListener {
         Imglabel.setBounds(5, 5, 200, 200);
 
         // Initialize JButtons
-        btnsignin = new JButton("Sign in");
+        btnsignin = new JButton("Log in");
         /*btnsignin.setIcon(img);
          * You can set an image to a  button if you want
          */
-        btnsignin.setBounds(225, 170, 80, 30);
+        btnsignin.setBounds(228, 170, 80, 30);
         btnsignin.addActionListener(this);
 
-        btnexit = new JButton("Exit");
-        btnexit.setBounds(325, 170, 80, 30);
-        btnexit.addActionListener(this);
+        //ImageIcon bimg = new ImageIcon("16.jpg");
+        btnregister = new JButton("Register");
+        //btnregister.setIcon(bimg);
+        btnregister.setBounds(328, 170, 80, 30);
+        btnregister.addActionListener(this);
 
         // Initialize JTextField
         name = new JTextField(10);
@@ -70,7 +72,7 @@ public class UIClient extends JFrame implements ActionListener {
         panel.add(name);
         panel.add(password);
         panel.add(btnsignin);
-        panel.add(btnexit);
+        panel.add(btnregister);
 
         // Set properties of the JFrame
         setContentPane(panel);
@@ -78,8 +80,9 @@ public class UIClient extends JFrame implements ActionListener {
         setLocationRelativeTo(null);
         setResizable(false);
         setTitle("Welcome");
-        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setVisible(true);
+        // 2017 Quan Zhang, David Chen all rights reserved
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -89,6 +92,7 @@ public class UIClient extends JFrame implements ActionListener {
 
         // Nothing is entered in the text field
         if (e.getSource() == btnsignin) {
+            // 2017 Quan Zhang, David Chen all rights reserved
             if (yourname.equals("Steve")) {
                 if (your.equals("333")) {
                     ImageIcon img1 = new ImageIcon("12.jpg");
@@ -108,11 +112,14 @@ public class UIClient extends JFrame implements ActionListener {
                         JOptionPane.INFORMATION_MESSAGE);
             }
 
-        }
-        else if (e.getSource() == btnexit) {
-            JOptionPane.showMessageDialog(null, "Thank you, see you again", "JButton",
-                    JOptionPane.INFORMATION_MESSAGE);
-            System.exit(0);
+        } else if (e.getSource() == btnregister) {
+            if (yourname.equals("David")) {
+                if (your.equals("111")) {
+                    ImageIcon img1 = new ImageIcon("12.jpg");
+                    JOptionPane.showMessageDialog(null, "Welcome to SF", "JButton",
+                            JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
         }
     }
 
