@@ -23,8 +23,8 @@ public class DBDriver {
 
     public boolean connect(){
         {
-            String userName = "ora_q8j0b";
-            String password = "a30409156";
+            String userName = "ora_u8h0b";
+            String password = "a43328153";
             String connectURL = "jdbc:oracle:thin:@localhost.ugrad.cs.ubc.ca:1522:ug";
 
             try
