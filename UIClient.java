@@ -83,7 +83,6 @@ public class UIClient extends JFrame implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-
         // Get the text entered in the text field
         String yourname = name.getText();
         String your = password.getText();
