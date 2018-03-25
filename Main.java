@@ -4,6 +4,7 @@ import java.awt.event.*;
 import java.awt.*;
 
 public class Main extends JFrame implements ActionListener{
+    private DBDriver dbDriver;
     private JButton employee, client;
 
     public JLabel l1, l4;
@@ -11,11 +12,16 @@ public class Main extends JFrame implements ActionListener{
     private UIbasic EUIlogin;
     private UIClient UIlogin;
 
+
     public static void main(String[] args) {
         new Main();
     }
 
     public Main(){
+        dbDriver = new DBDriver();
+        if(!dbDriver.connect()){
+            System.out.println("not connected");
+        }
         l1 = new JLabel();
         l1.setFont(new Font("Magneto", Font.PLAIN, 28));
         l1.setForeground(Color.RED);
@@ -71,7 +77,7 @@ public class Main extends JFrame implements ActionListener{
         //check if there are inputs
         if (e.getSource() == employee) {
             EUIlogin = new UIbasic();
-        } else if (e.getSource() == employee) {
+        } else if (e.getSource() == client) {
             UIlogin = new UIClient();
         }
 
