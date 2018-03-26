@@ -1,5 +1,7 @@
 import javax.swing.*;
 
+import javax.swing.JPanel;
+
 import java.awt.event.*;
 import java.awt.*;
 
@@ -7,6 +9,14 @@ public class UIbasic extends JFrame implements ActionListener {
     private JButton btnsignin, btnexit;
     private JTextField name;
     private JPasswordField password;
+
+    private SendPackage sndpkt;
+
+    //private UIClient UIlogin;
+
+    public JFrame getThisPanel() {
+        return this;
+    }
 
     public static void main(String[] args) {
 
@@ -48,8 +58,6 @@ public class UIbasic extends JFrame implements ActionListener {
         btnsignin.setBounds(280, 170, 80, 30);
         btnsignin.addActionListener(this);
 
-
-
         // Initialize JTextField
         name = new JTextField(10);
         name.setBounds(220, 70, 196, 22);
@@ -68,6 +76,7 @@ public class UIbasic extends JFrame implements ActionListener {
         panel.add(name);
         panel.add(password);
         panel.add(btnsignin);
+
         //panel.add(btnexit);
 
         // Set properties of the JFrame
@@ -95,6 +104,13 @@ public class UIbasic extends JFrame implements ActionListener {
                     ImageIcon img1 = new ImageIcon("12.jpg");
                     JOptionPane.showMessageDialog(null, "Haha, yes", "JButton",
                             JOptionPane.INFORMATION_MESSAGE,img1);
+                    // close login panel
+                    getThisPanel().dispose();
+
+                    // open function panel
+                    // TODO
+                    sndpkt = new SendPackage();
+
                 }
 
                 else {
@@ -102,11 +118,15 @@ public class UIbasic extends JFrame implements ActionListener {
                     JOptionPane.showMessageDialog(null, "Nope, wrong password",
                             "Information Dialog", JOptionPane.WARNING_MESSAGE,img2);
 
+                    // close login panel
+                    getThisPanel().dispose();
                 }
             }
             else{
                 JOptionPane.showMessageDialog(null, "Not an agent yet? Apply to us now", "JButton",
                         JOptionPane.INFORMATION_MESSAGE);
+                // close login panel
+                getThisPanel().dispose();
             }
         }
     }
