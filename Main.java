@@ -5,12 +5,11 @@ import java.awt.*;
 
 public class Main extends JFrame implements ActionListener{
     private DBDriver dbDriver;
-    private JButton employee, client, btnexit;
-
+    private JButton employee, client, tracking, btnexit;
     public JLabel l1, l4;
-
     private UIbasic EUIlogin;
     private UIClient UIlogin;
+    private TrackPackage trackpkg;
 
 
     public static void main(String[] args) {
@@ -43,16 +42,22 @@ public class Main extends JFrame implements ActionListener{
         employee = new JButton("Employee");
         employee.setOpaque(true);
         employee.setBackground(Color.PINK);
-        employee.setBounds(255, 360, 170, 40);
+        employee.setBounds(210, 360, 150, 40);
         employee.addActionListener(this);
 
         //client names button
         client = new JButton("Client");
         client.setOpaque(true);
         client.setBackground(Color.PINK);
-        client.setBounds(499, 360, 170, 40);
+        client.setBounds(380, 360, 150, 40);
         client.addActionListener(this);
 
+        //tracking button
+        tracking = new JButton("Tracking");
+        tracking.setOpaque(true);
+        tracking.setBackground(Color.PINK);
+        tracking.setBounds(550, 360, 150, 40);
+        tracking.addActionListener(this);
 
 
         // Declare and initialize JPanel
@@ -63,6 +68,7 @@ public class Main extends JFrame implements ActionListener{
         panel.add(l4);
         panel.add(employee);
         panel.add(client);
+        panel.add(tracking);
         panel.add(btnexit);
 
         // Set properties of the JFrame
@@ -80,15 +86,17 @@ public class Main extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         //check if there are inputs
-        if (e.getSource() == employee) {
-            EUIlogin = new UIbasic();
-        } else if (e.getSource() == client) {
-            UIlogin = new UIClient();
-        } else if (e.getSource() == btnexit) {
+        if (e.getSource() == btnexit) {
             JOptionPane.showMessageDialog(null, "Thank you, see you again", "JButton",
                     JOptionPane.INFORMATION_MESSAGE);
             System.exit(0);
             // 2017 Quan Zhang, David Chen all rights reserved
+        } else if (e.getSource() == tracking) {
+            trackpkg = new TrackPackage();
+        } else if (e.getSource() == employee) {
+            EUIlogin = new UIbasic();
+        } else if (e.getSource() == client) {
+            UIlogin = new UIClient();
         }
 
     }
