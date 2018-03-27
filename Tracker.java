@@ -1,5 +1,6 @@
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Tracker {
@@ -10,17 +11,23 @@ public class Tracker {
     }
 
     public String track(String trackingNum){
+        int trackingInt = Integer.parseInt(trackingNum);
+        String status = "invalid input";
         try{
-            //todo
-            //select parcel and get it status
-            //if its arrived at delivery station also provide courier's contact info
-            PreparedStatement ps = con.prepareStatement("SELECT ");
+            PreparedStatement ps = con.prepareStatement("SELECT STATUS FROM  PACKAGES WHERE TRACKING_NO = ?");
+            ps.setInt(1,trackingInt);
+            ResultSet resultSet = ps.executeQuery();
+            while(resultSet.next()) {
+                status = resultSet.getString(1);
+            }
+            ps.close();
 
         }catch(SQLException e){
             System.out.println("Message: " + e.getMessage());
             try
             {
                 con.rollback();
+                return "invalid input";
             }
             catch (SQLException ex2)
             {
@@ -28,7 +35,7 @@ public class Tracker {
                 System.exit(-1);
             }
         }
-        return "invalid input";
+        return status;
     }
 
 }
