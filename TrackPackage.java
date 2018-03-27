@@ -7,7 +7,8 @@ public class TrackPackage extends JFrame implements ActionListener {
     private JButton btntrack, btnconfirm;
     private JTextField tracknum;
     private JCheckBox arrived;
-    private JLabel num, status;
+    private JLabel num, status, pktstatus;
+    private String pktnum;
 
     public static void main(String[] args) {
         new TrackPackage();
@@ -39,14 +40,21 @@ public class TrackPackage extends JFrame implements ActionListener {
         status.setFont(new Font("Times New Roman", Font.PLAIN, 16));
         status.setForeground(Color.BLACK);
         status.setText("Status");
-        status.setBounds(220, 110, 250, 45);
+        status.setBounds(220, 95, 250, 45);
+
+        pktstatus = new JLabel();
+        pktstatus.setFont(new Font("Times New Roman", Font.PLAIN, 16));
+        pktstatus.setForeground(Color.GREEN);
+        pktstatus.setText("Hello");
+        pktstatus.setVisible(true);
+        pktstatus.setBounds(280, 110, 250, 45);
 
         // create check-boxes
         arrived = new JCheckBox("Arrived", false);
         arrived.setBackground(Color.WHITE);
         arrived.setForeground(Color.BLACK);
         arrived.addActionListener(this);
-        arrived.setBounds(220, 130, 250, 45);
+        arrived.setBounds(210, 150, 250, 45);
         arrived.addActionListener(this);
 
         btnconfirm = new JButton("Confirm");
@@ -62,6 +70,7 @@ public class TrackPackage extends JFrame implements ActionListener {
         panel.add(tracknum);
         panel.add(btntrack);
         panel.add(status);
+        panel.add(pktstatus);
         panel.add(arrived);
         panel.add(btnconfirm);
 
@@ -79,7 +88,16 @@ public class TrackPackage extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        pktnum = tracknum.getText();
 
+        
+        if(e.getSource() == btntrack) {
+            if(pktnum.equals("12345")) {
+                pktstatus.setText("Local on minivan");
+                //repaint();
+                //pktstatus.setVisible(true);
+            }
+        }
 
         //arrived.setSelected(false);
        //if (arrived.isSelected()){
