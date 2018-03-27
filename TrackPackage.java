@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
 
 public class TrackPackage extends JFrame implements ActionListener {
     private JButton btntrack, btnconfirm;
@@ -9,12 +10,11 @@ public class TrackPackage extends JFrame implements ActionListener {
     private JCheckBox arrived;
     private JLabel num, status, pktstatus;
     private String pktnum;
+    private Tracker tracker;
 
-    public static void main(String[] args) {
-        new TrackPackage();
-    }
 
-    public TrackPackage() {
+    public TrackPackage(Connection con) {
+        tracker = new Tracker(con);
         //set an image to a label
         ImageIcon img = new ImageIcon("15.jpg");
         JLabel Imglabel = new JLabel();
@@ -90,13 +90,9 @@ public class TrackPackage extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         pktnum = tracknum.getText();
 
-        
         if(e.getSource() == btntrack) {
-            if(pktnum.equals("12345")) {
-                pktstatus.setText("Local on minivan");
-                //repaint();
-                //pktstatus.setVisible(true);
-            }
+            String status = tracker.track(pktnum);
+            pktstatus.setText(status);
         }
 
         //arrived.setSelected(false);

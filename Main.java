@@ -2,9 +2,11 @@ import javax.swing.*;
 
 import java.awt.event.*;
 import java.awt.*;
+import java.sql.Connection;
 
 public class Main extends JFrame implements ActionListener{
     private DBDriver dbDriver;
+    private Connection connection;
     private JButton employee, client, tracking, btnexit;
     public JLabel l1, l4;
     private UIbasic EUIlogin;
@@ -22,6 +24,7 @@ public class Main extends JFrame implements ActionListener{
             System.out.println("not connected");
             System.exit(0);
         }
+        connection = dbDriver.connection;
         l1 = new JLabel();
         l1.setFont(new Font("Magneto", Font.PLAIN, 28));
         l1.setForeground(Color.RED);
@@ -92,7 +95,7 @@ public class Main extends JFrame implements ActionListener{
             System.exit(0);
             // 2017 Quan Zhang, David Chen all rights reserved
         } else if (e.getSource() == tracking) {
-            trackpkg = new TrackPackage();
+            trackpkg = new TrackPackage(connection);
         } else if (e.getSource() == employee) {
             EUIlogin = new UIbasic();
         } else if (e.getSource() == client) {
