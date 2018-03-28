@@ -264,7 +264,7 @@ public class UIRegister extends JFrame implements ActionListener {
                 monthSelected = 12;
             }
         }
-        
+
 
         if (e.getSource() == cyear) {
             if (cyear.getSelectedIndex() == 0) {
