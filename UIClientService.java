@@ -15,10 +15,7 @@ public class UIClientService extends JFrame implements ActionListener {
     private JTextField ccdtcard, caddr, ccvv, cphone;
     private JComboBox<String> cmonth, cyear;
     private JButton cdtCard, delete;
-
-    public static void main(String[] args) {
-        new UIClientService();
-    }
+    private Connection con;
 
     public UIClientService(Connection con) {
         this.con = con;
