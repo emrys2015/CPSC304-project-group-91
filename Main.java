@@ -99,7 +99,7 @@ public class Main extends JFrame implements ActionListener{
         } else if (e.getSource() == employee) {
             EUIlogin = new UIbasic();
         } else if (e.getSource() == client) {
-            UIlogin = new UIClient();
+            UIlogin = new UIClient(connection);
         }
 
     }
