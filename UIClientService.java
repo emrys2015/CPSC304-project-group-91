@@ -1,6 +1,8 @@
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.Connection;
 
 public class UIClientService extends JFrame implements ActionListener {
     private JLabel hello, name;
@@ -18,7 +20,8 @@ public class UIClientService extends JFrame implements ActionListener {
         new UIClientService();
     }
 
-    public UIClientService() {
+    public UIClientService(Connection con) {
+        this.con = con;
         hello = new JLabel();
         hello.setFont(new Font("Times New Roman", Font.BOLD, 15));
         hello.setForeground(Color.BLACK);

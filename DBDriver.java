@@ -23,7 +23,6 @@ public class DBDriver {
     }
 
     public boolean connect(){
-
         {
             String userName = "ora_u8h0b";
             String password = "a43328153";
