@@ -27,22 +27,13 @@ public class Driver {
         //track specific order with orderId
     }
 
-    public void deletePackage(int orderId){
+    public void changePackageStatus(int orderId){
         //todo
     }
 
-    public int totalWeight(){
+    public int totalWeight(int offNo){
         return 0;
     }
 
-    public boolean isExist(String login){
-        //todo
-        return false;
-    }
-
-
-    public void deleteAccount(String login){
-        //todo
-    }
 
 }

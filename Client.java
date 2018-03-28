@@ -1,70 +1,85 @@
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class Client {
     private int login;
-    private String passWord;
     private String eMail;
-    private String creditCardNum;
-    private String cvv;
-    private String phoneNum;
+    private int creditCardNum;
+    private int cvv;
+    private int phoneNum;
     private String address;
     private String clientName;
     private Connection con;
-    private Statement statement;
 
-    public Client(int login, String passWord, Connection con){
-        this.login = login;
-        this.passWord = passWord;
+    public Client(String login, Connection con){
+        this.login = toInt(login);
         this.con = con;
+
+        PreparedStatement ps;
+        try {
+            ps = con.prepareStatement("SELECT * FROM CLIENT WHERE C_NO = ?");
+            ps.setInt(1, this.login);
+            ResultSet resultSet = ps.executeQuery();
+            while(resultSet.next()){
+                clientName = resultSet.getString("C_NAME");
+                eMail = resultSet.getString("C_EMAIL");
+                creditCardNum = resultSet.getInt("C_CCARD");
+                phoneNum = resultSet.getInt("C_PHONE#");
+                cvv = resultSet.getInt("C_CVV");
+                address = resultSet.getString("C_ADDRESS");
+            }
+            ps.close();
+        }catch (SQLException e){
+            System.exit(-1);
+        }
+
+
     }
 
-    public void placeOrder(String recieverAddress, String recieverPhoneNo, int Weight, String DeliverType){
-        //todo
-        //place a new order
+    public String placeOrder(String receiverName, String recieverAddress, String recieverPhoneNo,
+                           String weight, String DeliverType){
+        float weightNum = Float.parseFloat(weight);
+        int rPhone = toInt(recieverPhoneNo);
+        try {
+            PreparedStatement ps;
+            ps = con.prepareStatement("INSERT INTO PACKAGES VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            ps.setInt(1,trackingNUmGenerater());
+            ps.setString(2,recieverAddress);
+            ps.setString(3,receiverName);
+            ps.setInt(4,rPhone);
+            ps.setFloat(5,weightNum);
+            ps.setString(6,null);
+            ps.setInt(7, login);
+            ps.setString(8,null);
+            ps.setString(9,null);
+            ps.setString(10,null);
+            ps.setString(11,null);
+            ps.setString(12,null);
+            ps.setString(13,null);
+            ps.setString(14,null);
+            ps.execute();
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+            return "OOPS! Order failed due to technical issue!";
+        }
+        return "Order proceed!";
     }
 
-    public void trackOrder(String orderId){
+    private String trackOrder(String orderId){
         Tracker tracker = new Tracker(con);
-        tracker.track(orderId);
+        return tracker.track(orderId);
     }
 
-    public void viewOrders(){
-        //todo
-        //view all orders
-    }
-
-    public void deleteOrder(int orderId){
-        //todo
-    }
-
-    public boolean isExist(int login){
-        //todo
-        return false;
-    }
-
-    public void addClient(int login,String name, String creditCardNum, String cvv, String eMail, String address, String phoneNum, String passWord){
-        //todo
-        //wait for password
+    private int trackingNUmGenerater(){
+        int trackingNum = 1200;
         try{
-            PreparedStatement preparedStatement = con.prepareStatement("INSERT INTO CLIENT VALUES (?,?,?,?,?,?,?)");
-            preparedStatement.setInt(1, login);
-            preparedStatement.setString(2, name);
-            preparedStatement.setString(3, creditCardNum);
-            preparedStatement.setString(4, cvv);
-            preparedStatement.setString(5, phoneNum);
-            preparedStatement.setString(6,address);
-            preparedStatement.setString(7,eMail);
-            preparedStatement.executeUpdate();
-            preparedStatement.close();
-        }catch(SQLException ex)
-        {
-            System.out.println("Message: " + ex.getMessage());
+            PreparedStatement ps = con.prepareStatement("SELECT COUNT(TRACKING_NO) FROM PACKAGES");
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                trackingNum += rs.getInt(1)+1;
+            }
+        }catch(SQLException e){
             try
             {
-                // undo the insert
                 con.rollback();
             }
             catch (SQLException ex2)
@@ -73,13 +88,107 @@ public class Client {
                 System.exit(-1);
             }
         }
-
+        return trackingNum;
     }
+
+    public void viewOrders(){
+        try{
+            PreparedStatement ps =con.prepareStatement("SELECT * FROM PACKAGES WHERE CLIENT_NO =?");
+            ps.setInt(1,login);
+            ResultSet rs = ps.executeQuery();
+            //todo
+            ps.close();
+        }catch (SQLException e){
+            //todo
+        }
+    }
+
+    public String deleteOrder(String orderId){
+        int orderNum = toInt(orderId);
+        PreparedStatement ps;
+        if(trackOrder(orderId).equals("Pending")){
+            try{
+                ps = con.prepareStatement("DELETE FROM PACKAGES WHERE TRACKING_NO = ?");
+                ps.setInt(1,orderNum);
+                ps.executeUpdate();
+                ps.close();
+                return "Cancel succeed";
+            }catch(SQLException e){
+                System.out.println("Message: " + e.getMessage());
+                try
+                {
+                    con.rollback();
+                    return "Cancel faild, please contact us for assistance";
+                }
+                catch (SQLException ex2)
+                {
+                    System.out.println("Message: " + ex2.getMessage());
+                    System.exit(-1);
+                }
+            }
+        }else {
+            try {
+                ps = con.prepareStatement("UPDATE PACKAGES SET RECEIVER_ADDRESS =?, " +
+                        "RECEIVER_NAME =?, RECEIVER_PHONENO =? WHERE TRACKING_NO = ?");
+                ps.setString(1, address);
+                ps.setString(2, clientName);
+                ps.setInt(3, phoneNum);
+                ps.setInt(4, orderNum);
+                ps.executeUpdate();
+                ps.close();
+                return "Your parcel is sending back!";
+            } catch (SQLException e) {
+                System.out.println("Message: " + e.getMessage());
+                try {
+                    con.rollback();
+                    return "Cancel faild, please contact us for assistance";
+                } catch (SQLException ex2) {
+                    System.out.println("Message: " + ex2.getMessage());
+                    System.exit(-2);
+                }
+
+            }
+        }
+        return "Cancel faild, please contact us for assistance";
+    }
+
+    public String updatePassword(String oldPassWord, String newPassWord){
+        int oPassNum = toInt(oldPassWord);
+        int nPassNum = toInt(newPassWord);
+        int tempPass = 1000000;
+        PreparedStatement ps;
+        ResultSet rs;
+        if(nPassNum > 999999){
+            return "Invalid password, please choose password under 6 digits";
+        }
+        try{
+            ps = con.prepareStatement("SELECT C_PASSWORD FROM CLIENT_LOGIN WHERE C_NO = ?");
+            ps.setInt(1, login);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                tempPass = rs.getInt(1);
+            }
+            if(tempPass == oPassNum){
+                ps = con.prepareStatement("UPDATE CLIENT_LOGIN SET C_PASSWORD =? WHERE C_NO =?");
+                ps.setInt(1,nPassNum);
+                ps.setInt(2, login);
+                ps.close();
+            }else{
+                System.exit(0);
+            }
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+            return "Change failed";
+        }
+        return "Password Updated!";
+    }
+
+
 
     public void changeCreditCard(String CreditCardNum, String cvv){
         try{
             PreparedStatement ps = con.prepareStatement("UPDATE CLIENT SET C_CCARD = ?, CVV =? WHERE C_NO = ?");
-            ps.setString(1,creditCardNum);
+            ps.setString(1,CreditCardNum);
             ps.setString(2,cvv);
             ps.setInt(3,login);
             ps.executeUpdate();
@@ -118,7 +227,7 @@ public class Client {
         }
     }
 
-    public void deleteAccount(int login){
+    public void deleteAccount(){
         try{
             PreparedStatement ps = con.prepareStatement("DELETE FROM CLIENT WHERE C_NO = ?");
             ps.setInt(1,login);
@@ -136,6 +245,10 @@ public class Client {
                 System.exit(-1);
             }
         }
+    }
+
+    private int toInt(String s){
+        return Integer.parseInt(s);
     }
 
 }
