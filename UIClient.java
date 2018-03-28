@@ -119,7 +119,7 @@ public class UIClient extends JFrame implements ActionListener {
                         JOptionPane.showMessageDialog(null, "Haha,yes", "JButton",
                                 JOptionPane.INFORMATION_MESSAGE,img1);
 
-                        UIOpenClient = new UIClientService();
+                        UIOpenClient = new UIClientService(con);
 
                     }else {
                         ImageIcon img2 = new ImageIcon("13.jpg");

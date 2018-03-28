@@ -39,13 +39,7 @@ public class Manager {
 
     }
 
-    public boolean isExist(String login){
-        //todo
-        return false;
-    }
+    public void findHeaviestWorkLoad(){
 
-
-    public void deleteAccount(){
-        //todo
     }
 }

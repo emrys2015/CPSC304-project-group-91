@@ -17,31 +17,24 @@ public class Courier {
         this.con = con;
     }
 
-    public void addPackage(String recieverAddress, String recieverPhoneNo, int Weight, String DeliverType){
-        //todo
-        //place a new order
+    public void viewPackageOnHand(){
+
     }
 
-    public void checkPackage(int orderId){
+    public void viewPrioritizedPackages(){
+
+    }
+
+    public void updatePackage(int orderId){
         //todo
         //track specific order with orderId
-    }
-
-    public void deletePackage(int orderId){
-        //todo
     }
 
     public int totalWeight(){
         return 0;
     }
 
-    public boolean isExist(String login){
-        //todo
-        return false;
-    }
+    public void getReceiverInfo(int orderId){
 
-
-    public void deleteAccount(String login){
-        //todo
     }
 }
