@@ -1,16 +1,6 @@
-import javax.sound.sampled.Line;
 import javax.swing.*;
-import javax.swing.plaf.SeparatorUI;
-
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-
-import java.text.DecimalFormat;
-import java.awt.Insets;
 import java.awt.event.*;
 
 public class UIRegister extends JFrame implements ActionListener {
@@ -62,7 +52,7 @@ public class UIRegister extends JFrame implements ActionListener {
         cdtcard.setText("Your Credit Card Please");
         cdtcard.setBounds(20, 150, 180, 45);
         tcdtcard = new JTextField(10);
-        tcdtcard.setBounds(20, 180, 150, 22);
+        tcdtcard.setBounds(20, 180, 170, 22);
         tcdtcard.setHorizontalAlignment(JLabel.CENTER);
 
         cvv = new JLabel();
@@ -216,11 +206,10 @@ public class UIRegister extends JFrame implements ActionListener {
         setSize(570, 400);
         setLocationRelativeTo(null);
         setResizable(false);
-        setTitle("Welcome");
+        setTitle("Express Service Client Register");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setVisible(true);
         // 2017 Quan Zhang, David Chen all rights reserved
-
     }
 
 
@@ -292,11 +281,13 @@ public class UIRegister extends JFrame implements ActionListener {
 
     }
 
-    public Boolean CheckAllBeforeRegister(){
+    public void CheckAllBeforeRegister(){
         if (spwd == scpwd){
-            return true;
+            checkAll =  true;
+
         } else {
-            return false;
+            checkAll = false;
+
         }
     }
 
