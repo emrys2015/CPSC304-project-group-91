@@ -1,36 +1,31 @@
-import javax.sound.sampled.Line;
 import javax.swing.*;
-import javax.swing.plaf.SeparatorUI;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 
-import java.text.DecimalFormat;
-import java.awt.Insets;
+import java.sql.Connection;
 import java.awt.event.*;
+import java.time.Month;
+import java.time.Year;
+import java.util.Calendar;
 
 public class UIRegister extends JFrame implements ActionListener {
     private JLabel seperationV;
     private JLabel title, login, name, cdtcard, cvv, month, year, email, addr, phone, pwd, cpwd;
     private JTextField tlogin, tname, tcdtcard, tcvv, temail, taddr, tphone, tpwd, tcpwd;
     private JComboBox<String> cmonth, cyear;
-    private JButton register;
+    private JButton registerButton;
     private int monthSelected = 0;
     private int yearSelected = 0;
 
     private String slogin, sname, scdtcard, scvv, semail, saddr, sphone, spwd, scpwd;
-    private Boolean checkAll = false;
+    private Connection con;
+    private Register register;
 
 
-    public static void main(String[] args) {
-        new UIRegister();
-    }
-
-    public UIRegister() {
+    public UIRegister(Connection con) {
+        this.con = con;
+        register = new Register(con);
         title = new JLabel();
         title.setFont(new Font("Times New Roman", Font.BOLD, 16));
         title.setForeground(Color.BLACK);
@@ -172,10 +167,10 @@ public class UIRegister extends JFrame implements ActionListener {
         seperationV.setIcon(img);
         seperationV.setBounds(280, 50, 2, 220);
 
-        register = new JButton("Register Now");
-        register.setBounds(240, 310, 80, 30);
-        register.setEnabled(checkAll);
-        register.addActionListener(this);
+        registerButton = new JButton("Register Now");
+        registerButton.setBounds(240, 310, 80, 30);
+        registerButton.setEnabled(true);
+        registerButton.addActionListener(this);
 
         // Declare and initialize JPanel
         JPanel panel = new JPanel();
@@ -209,7 +204,7 @@ public class UIRegister extends JFrame implements ActionListener {
         panel.add(cmonth);
         panel.add(cyear);
         panel.add(seperationV);
-        panel.add(register);
+        panel.add(registerButton);
 
         // Set properties of the JFrame
         setContentPane(panel);
@@ -235,6 +230,8 @@ public class UIRegister extends JFrame implements ActionListener {
         sphone = tphone.getText();
         spwd = tpwd.getText();
         scpwd = tcpwd.getText();
+
+
 
 
         if (e.getSource() == cmonth) {
@@ -290,14 +287,55 @@ public class UIRegister extends JFrame implements ActionListener {
             }
         }
 
-    }
+        if(e.getSource() == registerButton){
+            Calendar cal = Calendar.getInstance();
+            int yearNow = cal.get(Calendar.YEAR);
+            int monthNow = cal.get(Calendar.MONTH);
+            if(register.isExist(Integer.parseInt(slogin))){
+                ImageIcon img2 = new ImageIcon("13.jpg");
+                JOptionPane.showMessageDialog(null, "Login already exist",
+                        "Information Dialog", JOptionPane.WARNING_MESSAGE,img2);
+                return;
+            }
+            if(yearSelected < yearNow || (yearSelected == yearNow && monthSelected <= monthNow)){
+                ImageIcon img2 = new ImageIcon("13.jpg");
+                JOptionPane.showMessageDialog(null, "Credit card invalid expiration date",
+                        "Information Dialog", JOptionPane.WARNING_MESSAGE,img2);
+                return;
+            }
+            if(sname.isEmpty() || saddr.isEmpty() || scdtcard.isEmpty() || scvv.isEmpty() || sphone.isEmpty()||scpwd.isEmpty()||spwd.isEmpty()){
+                ImageIcon img2 = new ImageIcon("13.jpg");
+                JOptionPane.showMessageDialog(null, "Please complete the form before register",
+                        "Information Dialog", JOptionPane.WARNING_MESSAGE,img2);
+                return;
+            }
+            if(spwd.length() != 6){
+                ImageIcon img2 = new ImageIcon("13.jpg");
+                JOptionPane.showMessageDialog(null, "Please enter 6 digits password only contains numbers!",
+                        "Information Dialog", JOptionPane.WARNING_MESSAGE,img2);
+                return;
+            }
+            if(!spwd.equals(scpwd)){
+                ImageIcon img2 = new ImageIcon("13.jpg");
+                JOptionPane.showMessageDialog(null, "Password is not confirmed",
+                        "Information Dialog", JOptionPane.WARNING_MESSAGE,img2);
+                return;
+            }
+            boolean status = register.addClient(Integer.parseInt(slogin),sname,Integer.parseInt(scdtcard),
+                    Integer.parseInt(scvv),semail,saddr,Long.parseLong(sphone),Integer.parseInt(spwd));
+            if(status){
+                ImageIcon img1 = new ImageIcon("12.jpg");
+                JOptionPane.showMessageDialog(null, "Welcome, you have been registered!", "Success!",
+                        JOptionPane.INFORMATION_MESSAGE,img1);
 
-    public Boolean CheckAllBeforeRegister(){
-        if (spwd == scpwd){
-            return true;
-        } else {
-            return false;
+            }else{
+                ImageIcon img2 = new ImageIcon("13.jpg");
+                JOptionPane.showMessageDialog(null, "OOPS! Register faild :(",
+                        "Failed", JOptionPane.WARNING_MESSAGE,img2);
+                return;
+            }
         }
+
     }
 
 }
