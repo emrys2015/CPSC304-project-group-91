@@ -94,12 +94,6 @@ public class TrackPackage extends JFrame implements ActionListener {
             String status = tracker.track(pktnum);
             pktstatus.setText(status);
         }
-
-        //arrived.setSelected(false);
-       //if (arrived.isSelected()){
-                //JOptionPane.showMessageDialog(null, "By checking this box, you confirm receiving the package", "JButton",
-                     //   JOptionPane.INFORMATION_MESSAGE);
-            //}
         if(e.getSource() == btnconfirm) {
             if (arrived.isSelected()) {
                 JOptionPane.showMessageDialog(null, "Haha good, right?", "JButton",
