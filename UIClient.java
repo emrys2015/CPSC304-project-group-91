@@ -7,6 +7,7 @@ public class UIClient extends JFrame implements ActionListener {
     private JButton btnsignin, btnregister;
     private JTextField name;
     private JPasswordField password;
+    private UIRegister UIReg;
 
     public static void main(String[] args) {
 
@@ -58,6 +59,7 @@ public class UIClient extends JFrame implements ActionListener {
         name = new JTextField(10);
         name.setBounds(220, 70, 196, 22);
         name.setHorizontalAlignment(JLabel.CENTER);
+
         password = new JPasswordField(10);
         password.setBounds(220, 125, 196, 22);
         password.setHorizontalAlignment(JLabel.CENTER);
@@ -113,13 +115,10 @@ public class UIClient extends JFrame implements ActionListener {
             }
 
         } else if (e.getSource() == btnregister) {
-            if (yourname.equals("David")) {
-                if (your.equals("111")) {
-                    ImageIcon img1 = new ImageIcon("12.jpg");
-                    JOptionPane.showMessageDialog(null, "Welcome to SF", "JButton",
-                            JOptionPane.INFORMATION_MESSAGE);
-                }
-            }
+            this.dispose();
+
+            UIReg = new UIRegister();
+
         }
     }
 
