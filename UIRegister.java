@@ -173,7 +173,7 @@ public class UIRegister extends JFrame implements ActionListener {
         seperationV.setBounds(280, 50, 2, 220);
 
         register = new JButton("Register Now");
-        register.setBounds(240, 310, 80, 30);
+        register.setBounds(220, 310, 120, 30);
         register.setEnabled(checkAll);
         register.addActionListener(this);
 
