@@ -112,6 +112,7 @@ public class UIClient extends JFrame implements ActionListener {
                 PreparedStatement ps = con.prepareStatement("SELECT C_PASSWORD FROM CLIENT_LOGIN WHERE C_NO = ?");
                 ps.setInt(1, Integer.parseInt(yourLogin));
                 ResultSet rs = ps.executeQuery();
+
                 while(rs.next()){
                     if(rs.getInt(1) == Integer.parseInt(yourPassword)){
                         ImageIcon img1 = new ImageIcon("12.jpg");

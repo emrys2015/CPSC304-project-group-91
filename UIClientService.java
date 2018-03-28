@@ -285,7 +285,6 @@ public class UIClientService extends JFrame implements ActionListener {
         panel.add(cphone);
         panel.add(delete);
 
-
         // Set properties of the JFrame
         setContentPane(panel);
         setSize(570, 700);
