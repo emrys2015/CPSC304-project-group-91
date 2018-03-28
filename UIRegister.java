@@ -167,11 +167,13 @@ public class UIRegister extends JFrame implements ActionListener {
         seperationV.setIcon(img);
         seperationV.setBounds(280, 50, 2, 220);
 
+
         registerButton = new JButton("Register Now");
         registerButton.setBounds(240, 310, 80, 30);
         registerButton.setEnabled(true);
         registerButton.addActionListener(this);
 
+       
         // Declare and initialize JPanel
         JPanel panel = new JPanel();
         panel.setBackground(Color.WHITE);
