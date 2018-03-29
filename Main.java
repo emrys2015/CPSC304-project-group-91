@@ -80,7 +80,7 @@ public class Main extends JFrame implements ActionListener{
         setLocationRelativeTo(null);
         setResizable(false);
         setTitle("SF Express");
-        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
         getContentPane().setBackground(Color.WHITE);
         // 2017 Quan Zhang, David Chen all rights reserved
